@@ -1,63 +1,73 @@
-#Programmable Logic Controller (PLC)
+# Programmable Logic Controller (PLC)
 
-Is a minecraft mod for automating your builds.
+Is a minecraft mod for automating your builds using the same technology as Real Life factories do.
 It conforms as close as possible to IEC 61131-3 so it can be used as an educational tool as well.
 
 The mod consists of signal cables, connectors and a PLC.
 
-The PLC can be programmed with Structured Text Language (ST), Ladder Diagram Language (LD) or Function Block Language (FB).
+For now, the PLC can be programmed with Structured Text Language (ST).
 
-Currently only ST is implemented. LD and FB will follow later.
+Ladder Diagram Language (LD) and Function Block Language (FB) will be added later as well.
 
-##Connectors
-A connector has 2 "rows" of 16 bits. An Input row and an Output row.
-The Input row reads values from the block (or machine) it is connected to.
-The Output row writes values to the block (or machine) it is connected to.
-Each connector is automatically given an ID C<number> where <number> is sequential.
-Each connector can be given an alphanumeric name by the player.
+**_I am looking for help/collaboration on this project. If you're interested and versed in Minecraft Modding; please message me._**
 
-##Signals & Redstone
+## Instrumentation
+Instrumentation is anything that reads or writes information. E.g. buttons, switches, monitors, sensors, motors, etc.
+For now, the only instrument this mod comes with is a Redstone-Connector. In future there will be more instruments and an API so others can extend it.
+
+Instruments connect to Signal Cables. This connection consists of 2 (virtual) cables; an Input 'cable' and an Output 'cable'. They have 16 'wires' each allowing a 16 bit wide signal.
+
+Each Instrument is automatically given an ID `C<number>` where `<number>` is sequential (C stands for Connector, but other letters can be used e.g. B for Button, V for Valve, S for Sensor, etc.).
+
+Each Instrument has a gui where it can be given an alphanumeric name by the player.
+
+## Signals & Redstone
+Not every instrument will have a need for redstone, but if it does, it should conform to these defaults:
+
 Redstone can have a value of 0 to 15. This means it is 4 bits or 1 nybble.
-The Least Significant Nybble (LSN) or the I/O terminals is reserved for redstone signals.
-The other 12 terminals are reserved for future use (I want to add specific instruments like sensors, displays, etc. to this mod)
 
-Internally boolean values are converted based on the 3rd bit. This means that:
+Bit 0 of the signal-cables will be 1 if there is any redstone value (1-15). Bits 4, 5, 6 & 7 (the High Nybble of the Least Significant Byte) will hold the actual redstone value in binary.
 
-- HIGH = redstone value of 8 to 15
-- LOW = redstone value of 0 to 7
+Bit 1, 2, 3 and 8 to 15 are reserved for other uses specific to the type of instruments.
 
-##PLC
-The PLC block itself has 32 Inputs, 32 Outputs and 32 Memory Registers. Each 16 bits.
-There is also a Firmware slot and an EPROM slot.
-The Firmware slot determines if the PLC is in ST, LD or FB mode.
+## PLC
+The PLC block itself has 32 Input 'terminals', 32 Output 'terminals' and 32 Memory Registers. Each 16 bits.
+There is also an EPROM slot.
 The EPROM slot contains a chip-item that holds the program (to be edited or run).
 Finally there is an on/off button in the GUI. When off, you can edit the program and when on, the program runs.
 When editing a program it is immediately saved on the EPROM, but you must click the 'compile' button before it can be used.
 
-You assign each input and output to a connector on the same cable-network as the PLC.
+You assign each input and output to an instrument on the same cable-network as the PLC.
 
-##Terminal designations
-In order to access a terminal you refer to it as follows:
+## Terminal designations (Variables)
+In order to access a 'terminal' you refer to it with a variable:
 
-- Input terminals: `%I<number>`
-- Output terminals: `%Q<number>`
-- Memory registers: `%M<number>`
+- Input terminals: `%I<type><number>`
+- Output terminals: `%Q<type><number>`
+- Memory registers: `%M<type><number>`
 
-If no further designation is given, bit 3 is default. BE AWARE; this deviates from the IEC standard!
+There are 3 types:
 
-You can refer to other bits like this:
+- `X` this is optional. Refers to a bit.
+- `B` refers to a byte (8 bits).
+- `W` refers to a word (16 bits).
 
-`%I<number>.<bit>`  E.g. `%I12.5` will refer to bit 5 of input terminal 12.
+You can refer to a specific bit with the syntax:
+
+`%IX<number>.<bit>` E.g. `%IX12.5` will refer to bit 5 of input terminal 12.
 
 or:
 
-`%IX<number>.<bit>` E.g. `%IX12.5` this is the same as above. The `X` is optional.
+`%I<number>.<bit>`  E.g. `%I12.5` this is the same as above.
 
-You can also do:
+For bytes the syntax is:
 
-`%IB<number>.<byte>` which will refer to a byte (8 bits) where byte=0 refers to the LSB and byte=1 to the MSB. E.g. `%IB8.1`
+`%IB<number>.<byte>` where byte=0 refers to the LSB and byte=1 to the MSB. E.g. `%IB8.1`
 
-`%IW<number>` refers to the whole word (16 bits). E.g. `%IW28`
+Finally:
+
+`%IW<number>` refers to the whole word. E.g. `%IW28`
 
 Obviously where `I` is used in these examples you can also use `Q` or `M`.
 
+_An extensive Wiki (and perhaps in-game manual) will be added at a later date._
