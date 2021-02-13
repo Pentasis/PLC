@@ -1,8 +1,8 @@
-package pentasis.plc.blocks.plc;
+package pentasis.plc.core.plc.ladderdiagram;
 
 import pentasis.plc.base.BaseProgrammer;
 
-public class ProgrammerLD extends BaseProgrammer {
+public class BlockProgrammerLD extends BaseProgrammer {
 
     // Input terminals, 64 (0-63) * 16. I0:0
     // Output terminals, idem. Q0:0
@@ -21,7 +21,7 @@ public class ProgrammerLD extends BaseProgrammer {
     // ON/OFF switch (redstone/power?)
 
 
-    public ProgrammerLD() {
+    public BlockProgrammerLD() {
 
     }
 

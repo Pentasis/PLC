@@ -1,18 +1,17 @@
-package pentasis.plc.blocks.cables;
+package pentasis.plc.core.instumentation.redstone;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.ToolType;
 import pentasis.plc.base.BaseBlock;
 
-public class SignalCable extends BaseBlock {
+public class BlockConnectorRedstone extends BaseBlock {
 
-    public SignalCable() {
+    public BlockConnectorRedstone() {
         super(Block.Properties
               .create(Material.IRON)
               .harvestLevel(2)
               .harvestTool(ToolType.PICKAXE)
         );
     }
-
 }

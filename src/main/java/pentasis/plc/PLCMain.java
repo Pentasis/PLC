@@ -22,6 +22,10 @@ public class PLCMain {
     public static PLC plc;
 
     public PLCMain() {
+        /*
+           Yeah, I know everyone seems to use Static/Utility classes. And while I have no opinion on the matter
+           I choose to keep to a SOLID way of doing things. Hence the use of objects here.
+         */
         registryManager = new RegistryManager();
         contentManager = new ContentManager();
         itemGroup = new ItemGroupManager(MODID, () -> new ItemStack(contentManager.EPROM.get()));

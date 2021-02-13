@@ -1,13 +1,13 @@
-package pentasis.plc.blocks.cables;
+package pentasis.plc.core.misc;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.ToolType;
 import pentasis.plc.base.BaseBlock;
 
-public class Facade extends BaseBlock {
+public class BlockFacade extends BaseBlock {
 
-    public Facade() {
+    public BlockFacade() {
         super(Block.Properties
               .create(Material.IRON)
               .harvestLevel(2)

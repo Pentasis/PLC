@@ -1,7 +1,7 @@
 # Programmable Logic Controller (PLC)
 
 Is a minecraft mod for automating your builds using the same technology as Real Life factories do.
-It conforms as close as possible to IEC 61131-3 so it can be used as an educational tool as well.
+It conforms as close as possible to [IEC 61131-3](https://en.wikipedia.org/wiki/IEC_61131-3) so it can be used as an educational tool as well.
 
 The mod consists of signal cables, connectors and a PLC.
 

@@ -1,8 +1,8 @@
-package pentasis.plc.blocks.plc;
+package pentasis.plc.core.plc.structuredtext;
 
 import pentasis.plc.base.BaseProgrammer;
 
-public class ProgrammerFB extends BaseProgrammer {
+public class BlockProgrammerST extends BaseProgrammer {
 
     // Input terminals, 64 (0-63) * 16. I0:0
     // Output terminals, idem. Q0:0
@@ -21,7 +21,7 @@ public class ProgrammerFB extends BaseProgrammer {
     // ON/OFF switch (redstone/power?)
 
 
-    public ProgrammerFB() {
+    public BlockProgrammerST() {
 
     }
 
