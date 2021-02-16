@@ -2,6 +2,7 @@ package pentasis.plc.core.plc;
 
 /**
  * The Power Supply Unit (PSU) gives power to the PLC.
+ * In the configfile you can set the amount of power used (or 0 for none)
  */
 public class PowerSupply {
 
@@ -14,13 +15,31 @@ public class PowerSupply {
     }
 
     private void initMemoryMapping() {
-        dataBus.tagMemoryAddress("uses_power", "#S2:0.0");
-        dataBus.tagMemoryAddress("has_power", "#S2:0.1");
-        dataBus.tagMemoryAddress("power_is_on", "#S2:0.2");
+        dataBus.tagMemoryAddress("uses_power", "#ST0.0"); // from config
+        dataBus.tagMemoryAddress("has_power", "#ST0.1"); // if uses_power and amount = enough.
+        dataBus.tagMemoryAddress("power_is_on", "#ST0.2");
+
+        powerOff();
+    }
+
+    private void powerOn() {
+        dataBus.setBit("power_is_on", true);
+    }
+
+    private void powerOff() {
+        dataBus.setBit("power_is_on", false);
+    }
+
+    private void togglePower() {
+        if (dataBus.getBit("power_is_on")) {
+            powerOff();
+        } else {
+            powerOn();
+        }
     }
 
     /*
-    The GUIS has an on/off button, and a LED that is red when on.
+    The GUI has an on/off button, and a LED that is green when on and red (blinking?) if unpowered.
      */
     public void gui() {
 

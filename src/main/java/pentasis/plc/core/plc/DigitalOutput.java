@@ -8,8 +8,9 @@ public class DigitalOutput {
         modules = new Boolean[2][16];
     }
 
-    public void writeToModule(Integer module, Boolean[] output) {
-         modules[module] = output;
+    public void writeToModule(Integer module, Integer bitNr, Boolean state) {
+         modules[module][bitNr] = state;
+         // TODO: update to instruments?
     }
 
 

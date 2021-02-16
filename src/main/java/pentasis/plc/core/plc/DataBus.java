@@ -11,26 +11,56 @@ public class DataBus {
 
     private Memory ram;
     private Map<String, String> memoryTags;
-    private Map<String, Object> data;
 
     public DataBus() {
         ram = new Memory();
         memoryTags = new HashMap<>();
-        data = new HashMap<>();
     }
 
     public void tagMemoryAddress(String tag, String address) {
-        memoryTags.put(tag, address);
+        if (tag.startsWith("#") || tag.startsWith("%")) {
+            memoryTags.put(tag, address.substring(1));
+        } else {
+            memoryTags.put(tag, address); // TODO: this should never happen, if it does: Error.
+        }
     }
 
-    public String[] getAddressTokens(String tag) {
-        String[] tokens;
-        if (tag.startsWith("#")) {
-            tokens = tag.substring(1).split("\\:|\\.");
+    public String getAddress(String tag) {
+        if (tag.startsWith("#") || tag.startsWith("%")) {
+            return tag.substring(1);
         } else {
-            tokens = memoryTags.get(tag).split("\\:|\\.");
+            return memoryTags.get(tag);
         }
-        return tokens;
+    }
+
+    public void setBit(String address, Boolean state) {
+        address = getAddress(address);
+        ram.setBit(address, state);
+    }
+
+    public void setWord(String address, Integer value) {
+        address = getAddress(address);
+        ram.setWord(address, value);
+    }
+
+    public void setValue(String address, Object value) {
+        address = getAddress(address);
+        ram.setValue(address, value);
+    }
+
+    public Boolean getBit(String address) {
+        address = getAddress(address);
+        return ram.getBit(address);
+    }
+
+    public Integer getWord(String address) {
+        address = getAddress(address);
+        return ram.getWord(address);
+    }
+
+    public Object getValue(String address) {
+        address = getAddress(address);
+        return ram.getValue(address);
     }
 
 }

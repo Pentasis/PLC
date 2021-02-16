@@ -25,6 +25,7 @@ public class Memory {
 
     private Map<String, Integer[]> dataMemory;
     private Map<String, Object[]> analogMemory;
+    private String programMemory;
 
     public Memory() {
         initializeRAM();
@@ -33,6 +34,7 @@ public class Memory {
     private void initializeRAM() {
         dataMemory = new HashMap<>();
         analogMemory = new HashMap<>();
+        programMemory = "";
 
         dataMemory.put("DI", new Integer[32]);
         dataMemory.put("DO", new Integer[32]);
@@ -45,33 +47,48 @@ public class Memory {
         analogMemory.put("AM", new Object[32]);
     }
 
-    public Integer getWord(String type, Integer moduleNr) {
-        return dataMemory.get(type)[moduleNr];
+    // TODO: check for valid range modules & bits
+
+    public Integer getWord(String address) {
+        return dataMemory.get(getMemoryType(address))[getModuleNr(address)];
     }
 
-    public Boolean getBit(String type, Integer moduleNr, Integer bitNr) {
-        return (dataMemory.get(type)[moduleNr] & (1 << bitNr)) != 0;
+    public Boolean getBit(String address) {
+        return (dataMemory.get(getMemoryType(address))[getModuleNr(address)] & (1 << getBitNr(address))) != 0;
     }
 
-    public void setWord(String type, Integer moduleNr, Integer value) {
-        dataMemory.get(type)[moduleNr] = value;
+    public void setWord(String address, Integer value) {
+        dataMemory.get(getMemoryType(address))[getModuleNr(address)] = value;
     }
 
-    public void setBit(String type, Integer moduleNr, Integer bitNr, Boolean set) {
+    public void setBit(String address, Boolean set) {
         if (set) {
-            dataMemory.get(type)[moduleNr] = dataMemory.get(type)[moduleNr] | (1 << bitNr);
+            dataMemory.get(getMemoryType(address))[getModuleNr(address)] = dataMemory.get(getMemoryType(address))[getModuleNr(address)] | (1 << getBitNr(address));
         } else {
-            dataMemory.get(type)[moduleNr] = dataMemory.get(type)[moduleNr] & ~(1 << bitNr);
+            dataMemory.get(getMemoryType(address))[getModuleNr(address)] = dataMemory.get(getMemoryType(address))[getModuleNr(address)] & ~(1 << getBitNr(address));
         }
     }
 
-    public Object getValue(String type, Integer moduleNr) {
-        return analogMemory.get(type)[moduleNr];
+    public Object getValue(String address) {
+        return analogMemory.get(getMemoryType(address))[getModuleNr(address)];
     }
 
-    public void setValue(String type, Integer moduleNr, Object value) {
-        analogMemory.get(type)[moduleNr] = value;
+    public void setValue(String address, Object value) {
+        analogMemory.get(getMemoryType(address))[getModuleNr(address)] = value;
     }
 
+    private String getMemoryType(String address) {
+        return address.substring(0, 1);
+    }
 
+    private Integer getModuleNr(String address) {
+        String[] parts;
+        parts = address.substring(2).split("\\.");
+        return Integer.valueOf(parts[0]);
+    }
+
+    private Integer getBitNr(String address) {
+        address = address.substring(address.indexOf(".") + 1);
+        return Integer.valueOf(address);
+    }
 }

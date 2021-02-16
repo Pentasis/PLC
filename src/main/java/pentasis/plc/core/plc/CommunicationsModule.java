@@ -30,15 +30,43 @@ public class CommunicationsModule {
     }
 
     private void initMemoryMapping() {
-        //dataBus.tagMemoryAddress("uses_power", "S2:0.0");
+        // Remote modules (I/O) are mapped here.
     }
 
     public void readInputs() {
-
+        readLocalDigitalInputs();
+        // TODO: analogue inputs
+        // TODO: remote inputs
     }
 
     public void writeOutputs() {
+        writeLocalDigitalOutputs();
+        // TODO: analogue outputs
+        // TODO: remote outputs
+    }
 
+    private void readLocalDigitalInputs() {
+        int i = 0;
+        int j = 0;
+        while (i < 2) {
+            while (j < 16) {
+                dataBus.setBit("#DI" + i + "." + j, digitalInput.readFromModule(i)[j]);
+                j++;
+            }
+            i++;
+        }
+    }
+
+    private void writeLocalDigitalOutputs() {
+        int i = 0;
+        int j = 0;
+        while (i < 2) {
+            while (j < 16) {
+                digitalOutput.writeToModule(i, j, dataBus.getBit("#DO" + i + "." + j));
+                j++;
+            }
+            i++;
+        }
     }
 
     // private BlockWorkstation[] connected_workstations;

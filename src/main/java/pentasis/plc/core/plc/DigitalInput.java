@@ -9,6 +9,7 @@ public class DigitalInput {
     }
 
     public Boolean[] readFromModule(Integer module) {
+        // TODO: update from instruments?
         return modules[module];
     }
 
