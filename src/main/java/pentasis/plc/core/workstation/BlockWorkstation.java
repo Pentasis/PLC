@@ -1,12 +1,12 @@
-package pentasis.plc.base;
+package pentasis.plc.core.workstation;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.ToolType;
 
-public class BaseProgrammer extends Block {
+public class BlockWorkstation extends Block {
 
-    public BaseProgrammer() {
+    public BlockWorkstation() {
         super(Block.Properties
               .create(Material.IRON)
               .harvestLevel(2)
