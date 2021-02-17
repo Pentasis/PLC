@@ -91,4 +91,8 @@ public class Memory {
         address = address.substring(address.indexOf(".") + 1);
         return Integer.valueOf(address);
     }
+
+    public String getProgramMemory() {
+        return programMemory;
+    }
 }

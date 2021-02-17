@@ -1,12 +1,16 @@
 package pentasis.plc.core.plc;
 
 public class Processor {
-    public Processor(DataBus dataBus) {
 
+    private DataBus dataBus;
+    private String currentProgram;
+
+    public Processor(DataBus dataBus) {
+        this.dataBus = dataBus;
     }
-    // This runs the compiled program = the actual emulator
 
     public void runProgram() {
-
+        currentProgram = dataBus.getProgramFromMemory();
     }
+
 }

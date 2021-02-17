@@ -63,4 +63,8 @@ public class DataBus {
         return ram.getValue(address);
     }
 
+    public String getProgramFromMemory() {
+        return ram.getProgramMemory();
+    }
+
 }
